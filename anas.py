@@ -1,9 +1,9 @@
-# from openpyxl import Workbook
 import openpyxl
 from xml.etree.ElementTree import Element, SubElement, Comment
 from xml.etree import ElementTree
 from xml.dom import minidom
 
+# Bach ytformata xml mzian, il faut remplacer par la suite "&amp;" par "&"
 def prettify(elem):
     rough_string = ElementTree.tostring(elem, 'utf-8')
     reparsed = minidom.parseString(rough_string)
@@ -12,15 +12,9 @@ def prettify(elem):
 items = Element("items")
 comment = Comment('This will contain all your items')
 items.append(comment)
+# le fichier doit etre au format Excel xmlx
 wb = openpyxl.load_workbook(filename='source.xlsx')
 ws = wb.active
-
-# min_row = ws.min_row
-# max_row = ws.max_row
-# min_col = ws.min_column
-# max_col = ws.max_column
-# print(ws.max_column)
-# print(ws.max_row)
 
 for row_cells in ws.iter_rows():
     item = Element("item")
@@ -82,15 +76,3 @@ text_file = open("items.xml", "w")
 n = text_file.write(prettify(items))
 text_file.close()
 print(prettify(items))
-# print(tostring(items))
-    # print("*************************ROW*********************")
-    # print(row_cells[0].value)
-    # for cell in row_cells:
-    #     print('%s: cell.value=%s' % (cell, cell.value) )
-# for row in ws.iter_rows('A{}:A{}'.format(ws.min_row, ws.max_row)):
-#     for cell in row:
-#         print(cell.value)
-# a1 = sheet['A1']
-# print(a1.value)
-# sheet_ranges = wb['range names']
-# print(sheet_ranges['D18'].value)
